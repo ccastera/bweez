@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Capture from './webcam/Capture';
+import Picture from './display/Picture';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      isHomePage: true,
+      qrcodeDatas: null
+    }
+  }
+
+  goToPicture = (qrcodeDatas) => {
+    this.setState({
+      isHomePage: false,
+      qrcodeDatas: qrcodeDatas
+    });
+  };
+
+  render () {
+    let content = this.state.isHomePage ? <Capture goToPicture={this.goToPicture} /> : <Picture qrcodeDatas={this.state.qrcodeDatas} />;
+    return content;
+  }
+
 }
 
 export default App;
